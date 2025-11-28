@@ -2,7 +2,7 @@
 
 _Auto-generated from inline JSDoc documentation_
 
-_Generated: 2025-11-27T15:34:17.465Z_
+_Generated: 2025-11-28T02:09:58.005Z_
 
 ---
 
