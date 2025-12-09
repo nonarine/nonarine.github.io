@@ -2,7 +2,7 @@
 
 _Auto-generated from inline JSDoc documentation_
 
-_Generated: 2025-12-04T02:47:50.704Z_
+_Generated: 2025-12-09T11:02:16.082Z_
 
 ---
 
@@ -1235,15 +1235,6 @@ Should be called after DOM is ready
 Attach drag handlers to thumbs
 
 
-### preset-manager.js
-
-#### `loadPresets()`
-
-Load custom presets from localStorage
-
-**Returns:** *Object* - of preset names to preset objects
-
-
 ### settings-manager.js
 
 #### `sharing(settings)`
@@ -1832,15 +1823,24 @@ Override restoreFromSettings to prevent restoring (ephemeral control)
 Base class for all Web Component controls
 Provides reactive binding system with {{variable}} syntax
 
-#### class `for`
+#### `cache()`
+
+Process template: replace {{placeholders}} and register bind-* elements
+Supports four modes (in order of priority):
+1. External template via template="id" attribute
+2. Auto-discovered template by component name (lazy loaded if needed)
+3. Inline <template> child element
+4. Direct innerHTML
+
+#### `cache()`
 
 Register attribute bindings for all elements with a specific attribute
 
-#### class `for`
+#### `Map()`
 
 Recursively find and register all bind-* attributes in children
 
-#### class `for`
+#### `Map(element, bindAttr, varName)`
 
 Register a single binding
 
@@ -1849,6 +1849,124 @@ Register a single binding
 - `element` *Element* - - The element to bind
 - `bindAttr` *string* - - The bind attribute name (e.g., "bind-text", "bind-attr-value")
 - `varName` *string* - - The variable name to bind to
+
+#### `Map()`
+
+Update all bindings for a given property
+
+#### `Map()`
+
+Format a value for display (can be overridden)
+
+#### `Map()`
+
+Attach internal event listeners (override in subclasses)
+
+#### `promises()`
+
+Get current value from control (override in subclasses)
+
+#### `promises()`
+
+Set value in control (override in subclasses)
+
+#### `promises()`
+
+Note: reset(), handleButtonAction(), attachListeners(), saveToSettings(),
+restoreFromSettings(), triggerChange(), getNumberAttribute(), and
+getBooleanAttribute() are provided by mixins (ControlMixin, ButtonActionMixin,
+AttributeHelpersMixin).
+
+#### `promises()`
+
+Helper: Find input element
+Looks for data-role="input" or specific type, or any input
+
+#### `Map()`
+
+Note: registerActionButtons() is provided by ButtonActionMixin
+
+#### `Map(name, defaultValue)`
+
+Helper: Create reactive property
+Creates a getter/setter that automatically calls updateBindings()
+
+
+**Parameters:**
+
+- `name` *string* - - Property name
+- `defaultValue` *** - - Initial value
+
+Example:
+this.createReactiveProperty('value', 50);
+// Creates this._value = 50 and this.value getter/setter
+
+#### `Map(config)`
+
+Helper: Create multiple reactive properties from config
+
+
+**Parameters:**
+
+- `config` *Object* - - Object mapping property names to default values
+
+Example:
+this.createReactiveProperties({
+  label: 'Value',
+  value: 50,
+  min: 0,
+  max: 100
+});
+
+#### `Map(element, callback, debounce)`
+
+Helper: Add input listener with debouncing
+
+
+**Parameters:**
+
+- `element` *HTMLElement* - - Element to listen to
+- `callback` *Function* - - Callback function
+- `debounce` *number* - - Debounce time in ms (0 = no debounce)
+
+#### `Map(role, fallback)`
+
+Helper: Find element by role
+Uses data-role attribute or CSS selector fallback
+
+
+**Parameters:**
+
+- `role` *string* - - Role name
+- `fallback` *string* - - Fallback CSS selector
+
+Example:
+this.findByRole('slider', 'input[type="range"]');
+
+#### class `for`
+
+Helper: Find all elements by role
+
+
+**Parameters:**
+
+- `role` *string* - - Role name
+
+Example:
+this.findAllByRole('option'); // Returns all [data-role="option"]
+
+#### class `for`
+
+Static method: Load template from file (development mode)
+In production, templates are pre-injected into DOM by build script
+
+
+**Parameters:**
+
+- `componentName` *string* - - Component name (e.g., "linear-slider")
+- `templateId` *string* - - Template ID (e.g., "tmpl-linear-slider")
+
+**Returns:** *Promise<HTMLTemplateElement|null>* - element or null
 
 
 ### log-slider.js
@@ -2136,7 +2254,7 @@ Update configuration
 Test encode/decode symmetry
 Tests JavaScript encode→decode round-trip accuracy
 
-#### `enable()`
+#### `blending()`
 
 Log statistics about the current HDR framebuffer
 Reads the framebuffer pixels and computes min/max/avg values
